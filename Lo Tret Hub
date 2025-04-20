@@ -1,5 +1,4 @@
-local OrionLib = loadstring(game:HttpGet(('https://pastebin.com/raw/WRUyYTdY')))()
-
+local OrionLib = loadstring(game:HttpGet('https://pastebin.com/raw/WRUyYTdY'))()
 
 local Window = OrionLib:MakeWindow({
     Name = "Lo Tret Hub",
@@ -19,23 +18,24 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddToggle({
-	Name = "Auto Grab MoneyBag",
-	Default = false,
-	Callback = function(Value)
-            local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local hrp = character:WaitForChild("HumanoidRootPart")
-local pickupRange = 25
+    Name = "Auto Grab MoneyBag",
+    Default = false,
+    Callback = function(Value)
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local hrp = character:WaitForChild("HumanoidRootPart")
+        local pickupRange = 25
 
-game:GetService("RunService").RenderStepped:Connect(function()
-    for _, obj in ipairs(workspace:GetDescendants()) do
-        if obj:IsA("ProximityPrompt") and obj.Parent and obj.Parent:IsA("BasePart") then
-            if (obj.Parent.Position - hrp.Position).Magnitude <= pickupRange then
-                fireproximityprompt(obj)
+        game:GetService("RunService").RenderStepped:Connect(function()
+            for _, obj in ipairs(workspace:GetDescendants()) do
+                if obj:IsA("ProximityPrompt") and obj.Parent and obj.Parent:IsA("BasePart") then
+                    if (obj.Parent.Position - hrp.Position).Magnitude <= pickupRange then
+                        fireproximityprompt(obj)
+                    end
+                end
             end
-        end
-    end
-end)
-	end    
+        end)
+    end    
 })
+
 OrionLib:Init()
