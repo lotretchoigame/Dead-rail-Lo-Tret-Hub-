@@ -1,0 +1,19 @@
+local OrionLib = loadstring(game:HttpGet(('https://pastebin.com/raw/WRUyYTdY')))()
+
+
+local Window = OrionLib:MakeWindow({
+    Name = "Lo Tret Hub",
+    HidePremium = false,
+    SaveConfig = true,
+    ConfigFolder = "Name" -- Put the name of your hub or script here!
+})
+
+local Tab = Window:MakeTab({
+    Name = "Auto",
+    Icon = "rbxassetid://1",
+    PremiumOnly = false
+})
+
+local Section = Tab:AddSection({
+    Name = "Auto"
+})
