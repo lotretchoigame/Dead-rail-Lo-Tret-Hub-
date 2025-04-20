@@ -17,3 +17,24 @@ local Tab = Window:MakeTab({
 local Section = Tab:AddSection({
     Name = "Auto"
 })
+
+Tab:AddToggle({
+	Name = "Auto Grap MoneyBag",
+	Default = false,
+	Callback = function(Value)
+		local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+local pickupRange = 25
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    for _, obj in ipairs(workspace:GetDescendants()) do
+        if obj:IsA("ProximityPrompt") and obj.Parent and obj.Parent:IsA("BasePart") then
+            if (obj.Parent.Position - hrp.Position).Magnitude <= pickupRange then
+                fireproximityprompt(obj)
+            end
+        end
+    end
+end) 
+	end    
+})
