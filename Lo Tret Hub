@@ -5,7 +5,7 @@ local Window = OrionLib:MakeWindow({
     Name = "Lo Tret Hub",
     HidePremium = false,
     SaveConfig = true,
-    ConfigFolder = "Name" -- Put the name of your hub or script here!
+    ConfigFolder = "Lo Tret"
 })
 
 local Tab = Window:MakeTab({
@@ -22,7 +22,7 @@ Tab:AddToggle({
 	Name = "Auto Grap MoneyBag",
 	Default = false,
 	Callback = function(Value)
-		local player = game.Players.LocalPlayer
+		print(local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local hrp = character:WaitForChild("HumanoidRootPart")
 local pickupRange = 25
@@ -35,7 +35,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
             end
         end
     end
-end) 
+end))
 	end    
 })
 OrionLib:Init()
