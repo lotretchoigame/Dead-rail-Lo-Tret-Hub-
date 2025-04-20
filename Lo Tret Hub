@@ -17,6 +17,13 @@ local Section = Tab:AddSection({
     Name = "Auto"
 })
 
+OrionLib:MakeNotification({
+	Name = "Lo Tret Hub",
+	Content = "Thank For Use :D",
+	Image = "rbxassetid://4483345998",
+	Time = 3
+})
+
 Tab:AddToggle({
     Name = "Auto Grab MoneyBag",
     Default = false,
