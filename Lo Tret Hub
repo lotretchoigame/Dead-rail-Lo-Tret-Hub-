@@ -9,8 +9,8 @@ local Window = OrionLib:MakeWindow({
 })
 
 local Tab = Window:MakeTab({
-    Name = "Auto",
-    Icon = "rbxassetid://1",
+    Name = "Auto Tab",
+    Icon = "rbxassetid://6031264725",
     PremiumOnly = false
 })
 
@@ -19,7 +19,7 @@ local Section = Tab:AddSection({
 })
 
 Tab:AddToggle({
-	Name = "Auto Grap MoneyBag",
+	Name = "Auto Grab MoneyBag",
 	Default = false,
 	Callback = function(Value)
 		print(local player = game.Players.LocalPlayer
