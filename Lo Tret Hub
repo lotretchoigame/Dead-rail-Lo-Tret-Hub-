@@ -22,7 +22,7 @@ Tab:AddToggle({
 	Name = "Auto Grab MoneyBag",
 	Default = false,
 	Callback = function(Value)
-		print(local player = game.Players.LocalPlayer
+            local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local hrp = character:WaitForChild("HumanoidRootPart")
 local pickupRange = 25
@@ -35,7 +35,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
             end
         end
     end
-end))
+end)
 	end    
 })
 OrionLib:Init()
