@@ -1,10 +1,10 @@
-local OrionLib = loadstring(game:HttpGet('https://pastebin.com/raw/WRUyYTdY'))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/jensonhirst/Orion/main/source')))()
 
 local Window = OrionLib:MakeWindow({
     Name = "Lo Tret Hub",
     HidePremium = false,
     SaveConfig = true,
-    ConfigFolder = "Lo Tret"
+    ConfigFolder = "LoTret"
 })
 
 local Tab = Window:MakeTab({
@@ -13,36 +13,47 @@ local Tab = Window:MakeTab({
     PremiumOnly = false
 })
 
-local Section = Tab:AddSection({
+Tab:AddSection({
     Name = "Auto"
 })
 
 OrionLib:MakeNotification({
-	Name = "Lo Tret Hub",
-	Content = "Thank For Use :D",
-	Image = "rbxassetid://4483345998",
-	Time = 3
+    Name = "Lo Tret Hub",
+    Content = "Thanks For Using!",
+    Image = "rbxassetid://4483345998",
+    Time = 3
 })
+
+local autoGrabEnabled = false
+local connection
 
 Tab:AddToggle({
     Name = "Auto Grab MoneyBag",
     Default = false,
     Callback = function(Value)
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local hrp = character:WaitForChild("HumanoidRootPart")
-        local pickupRange = 25
+        autoGrabEnabled = Value
 
-        game:GetService("RunService").RenderStepped:Connect(function()
-            for _, obj in ipairs(workspace:GetDescendants()) do
-                if obj:IsA("ProximityPrompt") and obj.Parent and obj.Parent:IsA("BasePart") then
-                    if (obj.Parent.Position - hrp.Position).Magnitude <= pickupRange then
-                        fireproximityprompt(obj)
+        if autoGrabEnabled then
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local hrp = character:WaitForChild("HumanoidRootPart")
+
+            connection = game:GetService("RunService").RenderStepped:Connect(function()
+                for _, obj in ipairs(workspace:GetDescendants()) do
+                    if obj:IsA("ProximityPrompt") and obj.Parent:IsA("BasePart") then
+                        if (obj.Parent.Position - hrp.Position).Magnitude <= 25 then
+                            fireproximityprompt(obj)
+                        end
                     end
                 end
+            end)
+        else
+            if connection then
+                connection:Disconnect()
+                connection = nil
             end
-        end)
-    end    
+        end
+    end
 })
 
 OrionLib:Init()
