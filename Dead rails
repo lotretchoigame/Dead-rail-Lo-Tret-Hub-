@@ -1,1 +1,42 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
+local Window = Fluent:CreateWindow({
+    Title = "Dead Rails" .. Fluent.Version,
+    SubTitle = "By LoTret",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl
+})
+
+local Tabs = {
+    Auto = Window:AddTab({ Title = "Auto", Icon = "" }),
+}
+
+local Options = Fluent.Options
+
+do
+    Fluent:Notify({
+        Title = "Note(READ!)",
+        Content = "This script on beta version, use on acc clone!",
+        SubContent = "USE ON ACC CLONE!", -- Optional
+        Duration = 6
+    })
+
+
+
+    Tabs.Auto:AddParagraph({
+        Title = "On Beta Verison.",
+        Content = "Use on acc clone"
+    })
+
+    local Toggle = Tabs.Auto:AddToggle("Auto Grab Moneybag", {Title = "Auto Grab Moneybag", Default = false })
+
+    Toggle:OnChanged(function()
+        
+    end)
+
+    Options.MyToggle:SetValue(false)
