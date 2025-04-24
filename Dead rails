@@ -42,7 +42,7 @@ repeat wait() until Confirmed
 
 local Window = WindUI:CreateWindow({
     Title = "Lo Tret-Dead Rails",
-    Icon = "door-open",
+    Icon = "house",
     Author = "Dead Rails",
     Folder = "CloudHub",
     Size = UDim2.fromOffset(320, 200),
@@ -66,9 +66,9 @@ Window:EditOpenButton({
 })
 
 local Tabs = {
-    Main = Window:Tab({ Title = "Main Tab", Icon = "type" }),
+    Main = Window:Tab({ Title = "Main Tab", Icon = "house" }),
     Misc = Window:Tab({ Title = "Misc Tab", Icon = "mouse-pointer-2" }),
-    Auto = Window:Tab({ Title = "Auto", Icon = "auto" }),
+    Auto = Window:Tab({ Title = "Auto", Icon = "bolt" }),
     Esp = Window:Tab({ Title = "Esp", Icon = "paintbrush", Desc = "Tracker" }),
     Visual = Window:Tab({ Title = "Visual", Icon = "bell" }),
     Player = Window:Tab({ Title = "Player", Icon = "toggle-left" }),
