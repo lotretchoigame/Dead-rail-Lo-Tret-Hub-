@@ -98,28 +98,30 @@ Tabs.Auto:Toggle({
     Title = "Auto Grab MoneyBag",
     Default = false,
     Callback = function(state)
+        if state then
+    task.spawn(function()
         local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local hrp = character:WaitForChild("HumanoidRootPart")
+        local character = player.Character or player.CharacterAdded:Wait()
+        local hrp = character:WaitForChild("HumanoidRootPart")
+        local RANGE = 25
 
-local RANGE = 25
-
-while true do
-    for _, prompt in ipairs(workspace:GetDescendants()) do
-        if prompt:IsA("ProximityPrompt") then
-            local part = prompt.Parent
-            if part and part:IsA("BasePart") then
-                local distance = (hrp.Position - part.Position).Magnitude
-                local name = part.Name:lower()
-                if distance <= RANGE and prompt.Enabled and (name:find("money") or name:find("cash") or name:find("bag")) then
-                    fireproximityprompt(prompt)
-                    wait(0.2)
+        while state do
+            for _, prompt in ipairs(workspace:GetDescendants()) do
+                if prompt:IsA("ProximityPrompt") then
+                    local part = prompt.Parent
+                    if part and part:IsA("BasePart") then
+                        local distance = (hrp.Position - part.Position).Magnitude
+                        local name = part.Name:lower()
+                        if distance <= RANGE and prompt.Enabled and (name:find("money") or name:find("cash") or name:find("bag")) then
+                            fireproximityprompt(prompt)
+                            wait(0.2)
+                        end
+                    end
                 end
             end
+            wait(0.5)
         end
-    end
-    wait(0.5)
-end
+    end)
 end
 })
 
