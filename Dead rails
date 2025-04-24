@@ -71,7 +71,7 @@ local Tabs = {
     Auto = Window:Tab({ Title = "Auto", Icon = "bolt" }),
     Esp = Window:Tab({ Title = "Esp", Icon = "eye", Desc = "Tracker" }),
     Visual = Window:Tab({ Title = "Visual", Icon = "layers-2" }),
-    Player = Window:Tab({ Title = "Player", Icon = "toggle-left" }),
+    Player = Window:Tab({ Title = "Player", Icon = "dna" }),
     Teleport = Window:Tab({ Title = "Teleport", Icon = "sparkles" }),
     Show = Window:Tab({ Title = "Show", Icon = "tv-minimal" }),
     Setting = Window:Tab({ Title = "Setting", Icon = "setting", Desc = "Change Some" }),
