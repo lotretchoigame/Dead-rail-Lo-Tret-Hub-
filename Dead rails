@@ -1,10 +1,5 @@
 local WindUI = loadstring(game:HttpGet("https://tree-hub.vercel.app/api/UI/WindUI"))()
 
--- Set theme:
--- WindUI:SetTheme("Dark")
-
---- EXAMPLE !!!
-
 function gradient(text, startColor, endColor)
     local result = ""
     local length = #text
@@ -25,21 +20,21 @@ end
 local Confirmed = false
 
 WindUI:Popup({
-    Title = "Welcome!",
+    Title = "Welcome :D",
     Icon = "info",
-    Content = "This is an Example UI for the " .. gradient("WindUI", Color3.fromHex("#00FF87"), Color3.fromHex("#60EFFF")) .. " Lib",
+    Content = "Do you want use this?  " .. gradient("WindUI", Color3.fromHex("#00FF87"), Color3.fromHex("#60EFFF")) .. " Lib",
     Buttons = {
         {
-            Title = "Cancel",
+            Title = "Cancel ;-;",
             --Icon = "",
             Callback = function() end,
             Variant = "Tertiary", -- Primary, Secondary, Tertiary
         },
         {
-            Title = "Continue",
+            Title = "Continue :D",
             Icon = "arrow-right",
             Callback = function() Confirmed = true end,
-            Variant = "Primary", -- Primary, Secondary, Tertiary
+            Variant = "Primary",
         }
     }
 })
@@ -50,36 +45,23 @@ repeat wait() until Confirmed
 --
 
 local Window = WindUI:CreateWindow({
-    Title = "WindUI Library",
+    Title = "Lo Tret-Dead Rails",
     Icon = "door-open",
-    Author = "Example UI",
+    Author = "Dead Rails",
     Folder = "CloudHub",
-    Size = UDim2.fromOffset(580, 460),
+    Size = UDim2.fromOffset(320, 200),
     Transparent = true,
     Theme = "Dark",
     UserEnabled = false,
     SideBarWidth = 200,
-    --Background = "rbxassetid://13511292247", -- rbxassetid only
+    --Background = "rbxassetid://13511292247",
     HasOutline = true,
-    -- remove it below if you don't want to use the key system in your script.
-    KeySystem = { 
-        Key = { "1234", "5678" },
-        Note = "Example Key System. \n\nThe Key is '1234' or '5678",
-        -- Thumbnail = {
-        --     Image = "rbxassetid://18220445082", -- rbxassetid only
-        --     Title = "Thumbnail"
-        -- },
-        URL = "https://github.com/Footagesus/WindUI", -- remove this if the key is not obtained from the link.
-        SaveKey = true, -- optional
-    },
-})
-
-
+    
 --Window:SetBackgroundImage("rbxassetid://13511292247")
 
 
 Window:EditOpenButton({
-    Title = "Open Example UI",
+    Title = "Lo Tret-Dead Rails",
     Icon = "monitor",
     CornerRadius = UDim.new(0,16),
     StrokeThickness = 2,
@@ -93,295 +75,142 @@ Window:EditOpenButton({
 
 
 local Tabs = {
-    ParagraphTab = Window:Tab({ Title = "Paragraph", Icon = "type" }),
-    ButtonTab = Window:Tab({ Title = "Button", Icon = "mouse-pointer-2", Desc = "Contains interactive buttons for various actions." }),
-    CodeTab = Window:Tab({ Title = "Code", Icon = "code", Desc = "Displays and manages code snippets." }),
-    ColorPickerTab = Window:Tab({ Title = "ColorPicker", Icon = "paintbrush", Desc = "Choose and customize colors easily." }),
-    NotificationTab = Window:Tab({ Title = "Notification", Icon = "bell", Desc = "Configure and view notifications." }),
-    ToggleTab = Window:Tab({ Title = "Toggle", Icon = "toggle-left", Desc = "Switch settings on and off." }),
-    SliderTab = Window:Tab({ Title = "Slider", Icon = "sliders-horizontal", Desc = "Adjust values smoothly with sliders." }),
-    InputTab = Window:Tab({ Title = "Input", Icon = "keyboard", Desc = "Accept text and numerical input." }),
-    DropdownTab = Window:Tab({ Title = "Dropdown", Icon = "chevrons-up-down", Desc = "Select from multiple options." }),
+    Main = Window:Tab({ Title = "Main Tab", Icon = "type" }),
+
+    Misc = Window:Tab({ Title = "Misc Tab", Icon = "mouse-pointer-2" }),
+
+    Auto = Window:Tab({ Title = "Auto", Icon = "auto" }),
+
+    Esp = Window:Tab({ Title = "Esp", Icon = "paintbrush", Desc = "Tracker" }),
+    
+    Visual = Window:Tab({ Title = "Visual", Icon = "bell" }),
+    
+    Player = Window:Tab({ Title = "Player", Icon = "toggle-left" }),
+   
+    Teleport = Window:Tab({ Title = "Teleport", Icon = "sliders-horizontal" }),
+   
+    Show = Window:Tab({ Title = "Show", Icon = "keyboard" }),
+
+    Setting = Window:Tab({ Title = "Setting", Icon = "setting", Desc = "Change Some" }),
+    
     b = Window:Divider(),
-    WindowTab = Window:Tab({ Title = "Window and File Configuration", Icon = "settings", Desc = "Manage window settings and file configurations." }),
-    CreateThemeTab = Window:Tab({ Title = "Create Theme", Icon = "palette", Desc = "Design and apply custom themes." }),
+
+    WindowTab = Window:Tab({ Title = "Made By @Lo_Tret_Meme ", Icon = "settings", Desc = "Only Youtube" }),
+
     be = Window:Divider(),
-    LongTab = Window:Tab({ Title = "Long and empty tab. Looong and empty.. tab.", Icon = "frown", Desc = "Long Description" }),
-    LockedTab = Window:Tab({ Title = "Locked Tab", Icon = "lock", Desc = "This tab is locked", Locked = true }),
 }
 
 Window:SelectTab(1)
 
 
-Tabs.ParagraphTab:Paragraph({
-    Title = "Default",
-    Desc = "Normal Paragraph",
+Tabs.Main:Paragraph({
+    Title = "Made By Lo Tret",
+    Desc = "@Lo_Tret_Meme/Only Youtube",
     Image = "bird",
-    --Color = "Red"
-    Buttons = {
-        {
-            Title = "Ok!",
-        },
-        {
-            Title = "Ok!",
-        }
-    }
-})
-Tabs.ParagraphTab:Paragraph({
-    Title = "Danger (Error)",
-    Desc = "Red Paragraph",
-    Image = "triangle-alert",
-    Color = "Red",
-    Buttons = {
-        {
-            Title = "Ok!",
-        },
-        {
-            Title = "Ok!",
-        }
-    }
-})
-Tabs.ParagraphTab:Paragraph({
-    Title = "Warning",
-    Desc = "Orange Paragraph",
-    Image = "triangle-alert",
-    Color = "Orange",
-    Buttons = {
-        {
-            Title = "Ok!",
-        },
-        {
-            Title = "Ok!",
-        }
-    }
-})
-Tabs.ParagraphTab:Paragraph({
-    Title = "Success",
-    Desc = "Green Paragraph",
-    Image = "check",
-    Color = "Green",
-    Buttons = {
-        {
-            Title = "Ok!",
-        },
-        {
-            Title = "Ok!",
-        }
-    }
-})
-Tabs.ParagraphTab:Paragraph({
-    Title = "Info",
-    Desc = "Blue Paragraph",
-    Image = "info",
-    Color = "Blue",
-    Buttons = {
-        {
-            Title = "Ok!",
-        },
-        {
-            Title = "Ok!",
-        }
-    }
-})
-Tabs.ParagraphTab:Paragraph({
-    Title = "Grey",
-    Desc = "Grey Paragraph",
-    Image = "bird",
-    Color = "Grey",
-    Buttons = {
-        {
-            Title = "Ok!",
-        },
-        {
-            Title = "Ok!",
-        }
-    }
-})
-Tabs.ParagraphTab:Paragraph({
-    Title = "White",
-    Desc = "White Paragraph",
-    Image = "bird",
-    Color = "White",
-    Buttons = {
-        {
-            Title = "Ok!",
-        },
-        {
-            Title = "Ok!",
-        }
-    }
-})
-
-
-
-
-Tabs.ButtonTab:Button({
+    --Color = "Yellow"
+    
+Tabs.Misc:Button({
     Title = "Click Me",
     Desc = "This is a simple button",
     Callback = function() print("Button Clicked!") end
 })
 
-Tabs.ButtonTab:Button({
-    Title = "Locked Button",
-    Desc = "This button is locked",
-    Locked = true,
-})
-
-local destroybtn
-destroybtn = Tabs.ButtonTab:Button({
-    Title = "Click to destroy me!",
-    Callback = function() destroybtn:Destroy() end,
-})
-
-Tabs.ButtonTab:Button({
-    Title = "Submit",
-    Desc = "Click to submit",
-    Callback = function() print("Submitted!") end,
-})
-
-Tabs.ButtonTab:Button({
-    Title = "Set ToggleKey to 'F'",
-    Callback = function() Window:SetToggleKey(Enum.KeyCode.F) end,
-})
-
-
-Tabs.CodeTab:Code({
-    Title = "example-code.lua",
-    Code = [[
-local message = "Hello"
-print(message)
-
-if message == "Hello" then
-    print("Greetings!")
-end]],
-})
-
-Tabs.CodeTab:Code({
-    Title = "example-code-2-longggggg-looooonnnnnnggggggggggggggg.lua",
-    Code = [[
-local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/refs/heads/main/dist/main.lua"))()
-
-local Window = WindUI:CreateWindow({
-    Title = "WindUI Example",
-    Icon = "image",
-    Author = ".ftgs",
-    Folder = "CloudHub",
-    Size = UDim2.fromOffset(580, 460),
-})]],
-})
-
-
-Tabs.ColorPickerTab:Colorpicker({
-    Title = "Pick a Color",
-    Default = Color3.fromRGB(255, 0, 0),
-    Callback = function(color) print("Selected color: " .. tostring(color)) end
-})
-
-Tabs.ColorPickerTab:Colorpicker({
-    Title = "Transparency Color",
-    Default = Color3.fromRGB(0, 0, 255),
-    Transparency = 0,
-    Callback = function(color) print("Background color: " .. tostring(color)) end
-})
-
-
-Tabs.NotificationTab:Button({
-    Title = "Click to get Notified",
-    Callback = function() 
-        WindUI:Notify({
-            Title = "Notification Example 1",
-            Content = "Content",
-            Duration = 5,
-        })
-    end
-})
-
-Tabs.NotificationTab:Button({
-    Title = "Notification with icon",
-    Callback = function() 
-        WindUI:Notify({
-            Title = "Notification Example 2",
-            Content = "Content",
-            Icon = "droplet-off",
-            Duration = 5,
-        })
-    end
-})
-
-Tabs.NotificationTab:Button({
-    Title = "Notification with BackgroundImage",
-    Callback = function() 
-        WindUI:Notify({
-            Title = "Notification Example 3",
-            Content = "with BackgroundImage",
-            Icon = "image",
-            Duration = 5,
-            Background = "rbxassetid://13511292247"
-        })
-    end
-})
-
-
-Tabs.ToggleTab:Toggle({
-    Title = "Enable Feature",
-    Default = true,
-    Callback = function(state) print("Feature enabled: " .. tostring(state)) end
-})
-
-Tabs.ToggleTab:Toggle({
-    Title = "Activate Mode",
+Tabs.Auto:Toggle({
+    Title = "Auto Grab MoneyBag",
     Default = false,
-    Callback = function(state) print("Mode activated: " .. tostring(state)) end
+    Callback = function(state) local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+local RANGE = 25
+
+while true do
+    for _, prompt in ipairs(workspace:GetDescendants()) do
+        if prompt:IsA("ProximityPrompt") then
+            local part = prompt.Parent
+            if part and part:IsA("BasePart") then
+                local distance = (hrp.Position - part.Position).Magnitude
+                if distance <= RANGE and prompt.Enabled then
+                    fireproximityprompt(prompt)
+                    wait(0.2)
+                end
+            end
+        end
+    end
+    wait(0.5)
+end .. tostring(state) end
+
 })
-Tabs.ToggleTab:Toggle({
-    Title = "Toggle with icon",
-    Icon = "check",
+
+Tabs.Esp:Toggle({
+    Title = "Esp Item",
     Default = false,
-    Callback = function(state) print("Toggle with icon activated: " .. tostring(state)) end
+    Callback = function(state) .. tostring(state) end
+        
 })
 
 
-Tabs.SliderTab:Slider({
-    Title = "Volume Slider",
-    Value = {
-        Min = 0,
-        Max = 100,
-        Default = 50,
-    },
-    Callback = function(value) print("Volume set to: " .. value) end
+Tabs.Visual:Toggle({
+    Title = "Full Bright",
+    Default = false,
+    Callback = function(state) .. tostring(state) end
 })
 
-Tabs.SliderTab:Slider({
-    Title = "Brightness Slider",
-    Value = {
-        Min = 1,
-        Max = 100,
-        Default = 75,
-    },
-    Callback = function(value) print("Brightness set to: " .. value) end
+Tabs.Player:Toggle({
+    Title = "Noclip",
+    Default = false
+    Callback = function(value) .. tostring(state) end
 })
 
-
-Tabs.InputTab:Input({
-    Title = "Username",
-    Default = "Guest",
-    Placeholder = "Enter your username",
+Tabs.Teleport:Button({
+    Title = "Teleport To Train",
+    Desc = "You Will On Train",
     Callback = function(input) print("Username: " .. input) end
 })
 
-Tabs.InputTab:Input({
-    Title = "Password",
-    Default = "",
-    Placeholder = "Enter your password",
-    Callback = function(input) print("Password entered.") end
+Tabs.Show:Toggle({
+    Title = "Show Time",
+    Default = false
+    Callback = function(state) .. tostring (state) end
 })
 
+Tabs.Setting:Colorpicker({
+    Title = "Background Color",
+    Default = Color3.fromHex(ThemeAccent),
+    Callback = function(color)
+        ThemeAccent = color:ToHex()
+    end
+})
 
-Tabs.DropdownTab:Dropdown({
-    Title = "Select an Option",
-    Values = { "Option 1", "Option 2", "Option 3" },
-    Value = "Option 1",
-    Callback = function(option) print("Selected: " .. option) end
+Tabs.Setting:Colorpicker({
+    Title = "Outline Color",
+    Default = Color3.fromHex(ThemeOutline),
+    Callback = function(color)
+        ThemeOutline = color:ToHex()
+    end
+})
+
+Tabs.Setting:Colorpicker({
+    Title = "Text Color",
+    Default = Color3.fromHex(ThemeText),
+    Callback = function(color)
+        ThemeText = color:ToHex()
+    end
+})
+
+Tabs.Setting:Colorpicker({
+    Title = "Placeholder Text Color",
+    Default = Color3.fromHex(ThemePlaceholderText),
+    Callback = function(color)
+        ThemePlaceholderText = color:ToHex()
+    end
+})
+
+Tabs.Setting:Button({
+    Title = "Update Theme",
+    Callback = function()
+        updateTheme()
+    end
 })
 
 Tabs.DropdownTab:Dropdown({
@@ -550,44 +379,5 @@ local CreateInput = Tabs.CreateThemeTab:Input({
     Value = currentThemeName,
     Callback = function(name)
         currentThemeName = name
-    end
-})
-
-Tabs.CreateThemeTab:Colorpicker({
-    Title = "Background Color",
-    Default = Color3.fromHex(ThemeAccent),
-    Callback = function(color)
-        ThemeAccent = color:ToHex()
-    end
-})
-
-Tabs.CreateThemeTab:Colorpicker({
-    Title = "Outline Color",
-    Default = Color3.fromHex(ThemeOutline),
-    Callback = function(color)
-        ThemeOutline = color:ToHex()
-    end
-})
-
-Tabs.CreateThemeTab:Colorpicker({
-    Title = "Text Color",
-    Default = Color3.fromHex(ThemeText),
-    Callback = function(color)
-        ThemeText = color:ToHex()
-    end
-})
-
-Tabs.CreateThemeTab:Colorpicker({
-    Title = "Placeholder Text Color",
-    Default = Color3.fromHex(ThemePlaceholderText),
-    Callback = function(color)
-        ThemePlaceholderText = color:ToHex()
-    end
-})
-
-Tabs.CreateThemeTab:Button({
-    Title = "Update Theme",
-    Callback = function()
-        updateTheme()
     end
 })
