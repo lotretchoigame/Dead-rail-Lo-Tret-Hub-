@@ -120,6 +120,7 @@ while true do
     end
     wait(0.5)
 end
+end
 })
 
 Tabs.Esp:Toggle({
