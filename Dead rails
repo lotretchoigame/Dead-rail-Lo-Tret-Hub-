@@ -245,9 +245,34 @@ end
 })
 
 Tabs.Player:Toggle({
-    Title = "Noclip",
-    Default = false,
-    Callback = function(state) print(tostring(state)) end
+    Title = "Noclip",
+    Default = false,
+    Callback = function(state)
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local noclipConn
+
+        if state then
+            noclipConn = game:GetService("RunService").Stepped:Connect(function()
+                for _, part in ipairs(character:GetDescendants()) do
+                    if part:IsA("BasePart") and part.CanCollide then
+                        part.CanCollide = false
+                    end
+                end
+            end)
+            _G.NoclipConn = noclipConn
+        else
+            if _G.NoclipConn then
+                _G.NoclipConn:Disconnect()
+                _G.NoclipConn = nil
+            end
+            for _, part in ipairs(character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = true
+                end
+            end
+        end
+    end
 })
 
 Tabs.Teleport:Button({
