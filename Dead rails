@@ -3,42 +3,28 @@ local WindUI = loadstring(game:HttpGet("https://tree-hub.vercel.app/api/UI/WindU
 function gradient(text, startColor, endColor)
     local result = ""
     local length = #text
-
     for i = 1, length do
         local t = (i - 1) / math.max(length - 1, 1)
         local r = math.floor((startColor.R + (endColor.R - startColor.R) * t) * 255)
         local g = math.floor((startColor.G + (endColor.G - startColor.G) * t) * 255)
         local b = math.floor((startColor.B + (endColor.B - startColor.B) * t) * 255)
-
         local char = text:sub(i, i)
         result = result .. "<font color=\"rgb(" .. r ..", " .. g .. ", " .. b .. ")\">" .. char .. "</font>"
     end
-
     return result
 end
 
 local Confirmed = false
-
 WindUI:Popup({
     Title = "Welcome :D",
     Icon = "info",
     Content = "Do you want use this?  " .. gradient("Lo Tret", Color3.fromHex("#00FF87"), Color3.fromHex("#60EFFF")) .. " Script",
     Buttons = {
-        {
-            Title = "Cancel ;-;",
-            Callback = function() end,
-            Variant = "Tertiary",
-        },
-        {
-            Title = "Continue :D",
-            Icon = "arrow-right",
-            Callback = function() Confirmed = true end,
-            Variant = "Primary",
-        }
+        { Title = "Cancel ;-;", Callback = function() end, Variant = "Tertiary" },
+        { Title = "Continue :D", Icon = "arrow-right", Callback = function() Confirmed = true end, Variant = "Primary" }
     }
 })
-
-repeat wait() until Confirmed
+repeat task.wait() until Confirmed
 
 local Window = WindUI:CreateWindow({
     Title = "Lo Tret-Dead Rails",
@@ -58,10 +44,7 @@ Window:EditOpenButton({
     Icon = "monitor",
     CornerRadius = UDim.new(0,16),
     StrokeThickness = 2,
-    Color = ColorSequence.new(
-        Color3.fromHex("FF0F7B"), 
-        Color3.fromHex("F89B29")
-    ),
+    Color = ColorSequence.new(Color3.fromHex("FF0F7B"), Color3.fromHex("F89B29")),
     Draggable = true,
 })
 
@@ -74,7 +57,8 @@ local Tabs = {
     Player = Window:Tab({ Title = "Player", Icon = "dna" }),
     Teleport = Window:Tab({ Title = "Teleport", Icon = "sparkles" }),
     Show = Window:Tab({ Title = "Show", Icon = "tv-minimal" }),
-    OP = Window:Tab({ Title = "OverPower", Icon = "sparkles" }),
+    OP = Window:Tab({ Title = "OP", Icon = "sparkles" }),
+    Theme = Window:Tab({ Title = "Theme", Icon = "bolt", Desc = "Set Theme" }),
     Setting = Window:Tab({ Title = "Setting", Icon = "setting", Desc = "Change Some" }),
     b = Window:Divider(),
     WindowTab = Window:Tab({ Title = "Made By @Lo_Tret_Meme ", Icon = "settings", Desc = "Only Youtube" }),
@@ -82,230 +66,143 @@ local Tabs = {
 }
 
 Window:SelectTab(1)
-
-Tabs.Main:Paragraph({
-    Title = "Made By Lo Tret",
-    Desc = "@Lo_Tret_Meme/Only Youtube",
-    Image = "bird",
-})
-
-Tabs.Misc:Button({
-    Title = "Click Me",
-    Desc = "This is a simple button",
-    Callback = function() print("Button Clicked!") end
-})
+Tabs.Main:Paragraph({ Title = "Made By Lo Tret", Desc = "@Lo_Tret_Meme/Only Youtube", Image = "bird" })
+Tabs.Misc:Button({ Title = "Click Me", Desc = "This is a simple button", Callback = function() print("Button Clicked!") end })
 
 Tabs.Auto:Toggle({
     Title = "Auto Grab MoneyBag",
     Default = false,
     Callback = function(state)
         if state then
-    task.spawn(function()
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local hrp = character:WaitForChild("HumanoidRootPart")
-        local RANGE = 25
-
-        while state do
-            for _, prompt in ipairs(workspace:GetDescendants()) do
-                if prompt:IsA("ProximityPrompt") then
-                    local part = prompt.Parent
-                    if part and part:IsA("BasePart") then
-                        local distance = (hrp.Position - part.Position).Magnitude
-                        local name = part.Name:lower()
-                        if distance <= RANGE and prompt.Enabled and (name:find("money") or name:find("cash") or name:find("bag")) then
-                            fireproximityprompt(prompt)
-                            wait(0.2)
+            task.spawn(function()
+                local player = game.Players.LocalPlayer
+                local character = player.Character or player.CharacterAdded:Wait()
+                local hrp = character:WaitForChild("HumanoidRootPart")
+                local RANGE = 25
+                while state do
+                    for _, prompt in ipairs(workspace:GetDescendants()) do
+                        if prompt:IsA("ProximityPrompt") then
+                            local part = prompt.Parent
+                            if part and part:IsA("BasePart") then
+                                local distance = (hrp.Position - part.Position).Magnitude
+                                local name = part.Name:lower()
+                                if distance <= RANGE and prompt.Enabled and (name:find("money") or name:find("cash") or name:find("bag")) then
+                                    fireproximityprompt(prompt)
+                                    task.wait(0.2)
+                                end
+                            end
                         end
                     end
+                    task.wait(0.5)
                 end
-            end
-            wait(0.5)
+            end)
         end
-    end)
-end
+    end
 })
 
-Tabs.Esp:Toggle({
-    Title = "Esp Item",
-    Default = false,
-    Callback = function(state) print(tostring(state)) end
-})
+Tabs.Esp:Toggle({ Title = "Esp Item", Default = false, Callback = function(state) print(tostring(state)) end })
 
 Tabs.Visual:Toggle({
     Title = "Full Bright",
     Default = false,
     Callback = function(state)
         if not _G.FullBrightExecuted then
+            _G.FullBrightEnabled = false
+            _G.NormalLightingSettings = {
+                Brightness = game.Lighting.Brightness,
+                ClockTime = game.Lighting.ClockTime,
+                FogEnd = game.Lighting.FogEnd,
+                GlobalShadows = game.Lighting.GlobalShadows,
+                Ambient = game.Lighting.Ambient
+            }
+            local function enforceLighting()
+                game.Lighting.Brightness = 1
+                game.Lighting.ClockTime = 12
+                game.Lighting.FogEnd = 786543
+                game.Lighting.GlobalShadows = false
+                game.Lighting.Ambient = Color3.fromRGB(178, 178, 178)
+            end
+            enforceLighting()
+            game.Lighting:GetPropertyChangedSignal("Brightness"):Connect(function()
+                if _G.FullBrightEnabled then game.Lighting.Brightness = 1 end
+            end)
+            game.Lighting:GetPropertyChangedSignal("ClockTime"):Connect(function()
+                if _G.FullBrightEnabled then game.Lighting.ClockTime = 12 end
+            end)
+            game.Lighting:GetPropertyChangedSignal("FogEnd"):Connect(function()
+                if _G.FullBrightEnabled then game.Lighting.FogEnd = 786543 end
+            end)
+            game.Lighting:GetPropertyChangedSignal("GlobalShadows"):Connect(function()
+                if _G.FullBrightEnabled then game.Lighting.GlobalShadows = false end
+            end)
+            game.Lighting:GetPropertyChangedSignal("Ambient"):Connect(function()
+                if _G.FullBrightEnabled then game.Lighting.Ambient = Color3.fromRGB(178, 178, 178) end
+            end)
+            _G.FullBrightExecuted = true
+        end
 
-	_G.FullBrightEnabled = false
-
-	_G.NormalLightingSettings = {
-		Brightness = game:GetService("Lighting").Brightness,
-		ClockTime = game:GetService("Lighting").ClockTime,
-		FogEnd = game:GetService("Lighting").FogEnd,
-		GlobalShadows = game:GetService("Lighting").GlobalShadows,
-		Ambient = game:GetService("Lighting").Ambient
-	}
-
-	game:GetService("Lighting"):GetPropertyChangedSignal("Brightness"):Connect(function()
-		if game:GetService("Lighting").Brightness ~= 1 and game:GetService("Lighting").Brightness ~= _G.NormalLightingSettings.Brightness then
-			_G.NormalLightingSettings.Brightness = game:GetService("Lighting").Brightness
-			if not _G.FullBrightEnabled then
-				repeat
-					wait()
-				until _G.FullBrightEnabled
-			end
-			game:GetService("Lighting").Brightness = 1
-		end
-	end)
-
-	game:GetService("Lighting"):GetPropertyChangedSignal("ClockTime"):Connect(function()
-		if game:GetService("Lighting").ClockTime ~= 12 and game:GetService("Lighting").ClockTime ~= _G.NormalLightingSettings.ClockTime then
-			_G.NormalLightingSettings.ClockTime = game:GetService("Lighting").ClockTime
-			if not _G.FullBrightEnabled then
-				repeat
-					wait()
-				until _G.FullBrightEnabled
-			end
-			game:GetService("Lighting").ClockTime = 12
-		end
-	end)
-
-	game:GetService("Lighting"):GetPropertyChangedSignal("FogEnd"):Connect(function()
-		if game:GetService("Lighting").FogEnd ~= 786543 and game:GetService("Lighting").FogEnd ~= _G.NormalLightingSettings.FogEnd then
-			_G.NormalLightingSettings.FogEnd = game:GetService("Lighting").FogEnd
-			if not _G.FullBrightEnabled then
-				repeat
-					wait()
-				until _G.FullBrightEnabled
-			end
-			game:GetService("Lighting").FogEnd = 786543
-		end
-	end)
-
-	game:GetService("Lighting"):GetPropertyChangedSignal("GlobalShadows"):Connect(function()
-		if game:GetService("Lighting").GlobalShadows ~= false and game:GetService("Lighting").GlobalShadows ~= _G.NormalLightingSettings.GlobalShadows then
-			_G.NormalLightingSettings.GlobalShadows = game:GetService("Lighting").GlobalShadows
-			if not _G.FullBrightEnabled then
-				repeat
-					wait()
-				until _G.FullBrightEnabled
-			end
-			game:GetService("Lighting").GlobalShadows = false
-		end
-	end)
-
-	game:GetService("Lighting"):GetPropertyChangedSignal("Ambient"):Connect(function()
-		if game:GetService("Lighting").Ambient ~= Color3.fromRGB(178, 178, 178) and game:GetService("Lighting").Ambient ~= _G.NormalLightingSettings.Ambient then
-			_G.NormalLightingSettings.Ambient = game:GetService("Lighting").Ambient
-			if not _G.FullBrightEnabled then
-				repeat
-					wait()
-				until _G.FullBrightEnabled
-			end
-			game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
-		end
-	end)
-
-	game:GetService("Lighting").Brightness = 1
-	game:GetService("Lighting").ClockTime = 12
-	game:GetService("Lighting").FogEnd = 786543
-	game:GetService("Lighting").GlobalShadows = false
-	game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
-
-	local LatestValue = true
-	spawn(function()
-		repeat
-			wait()
-		until _G.FullBrightEnabled
-		while wait() do
-			if _G.FullBrightEnabled ~= LatestValue then
-				if not _G.FullBrightEnabled then
-					game:GetService("Lighting").Brightness = _G.NormalLightingSettings.Brightness
-					game:GetService("Lighting").ClockTime = _G.NormalLightingSettings.ClockTime
-					game:GetService("Lighting").FogEnd = _G.NormalLightingSettings.FogEnd
-					game:GetService("Lighting").GlobalShadows = _G.NormalLightingSettings.GlobalShadows
-					game:GetService("Lighting").Ambient = _G.NormalLightingSettings.Ambient
-				else
-					game:GetService("Lighting").Brightness = 1
-					game:GetService("Lighting").ClockTime = 12
-					game:GetService("Lighting").FogEnd = 786543
-					game:GetService("Lighting").GlobalShadows = false
-					game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
-				end
-				LatestValue = not LatestValue
-			end
-		end
-	end)
-end
-
-_G.FullBrightExecuted = true
-_G.FullBrightEnabled = not _G.FullBrightEnabled
-end
+        _G.FullBrightEnabled = state
+        if not state then
+            local normal = _G.NormalLightingSettings
+            game.Lighting.Brightness = normal.Brightness
+            game.Lighting.ClockTime = normal.ClockTime
+            game.Lighting.FogEnd = normal.FogEnd
+            game.Lighting.GlobalShadows = normal.GlobalShadows
+            game.Lighting.Ambient = normal.Ambient
+        end
+    end
 })
 
 Tabs.Player:Toggle({
-    Title = "Noclip",
-    Default = false,
-    Callback = function(state)
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local noclipConn
-
-        if state then
-            noclipConn = game:GetService("RunService").Stepped:Connect(function()
-                for _, part in ipairs(character:GetDescendants()) do
-                    if part:IsA("BasePart") and part.CanCollide then
-                        part.CanCollide = false
-                    end
-                end
-            end)
-            _G.NoclipConn = noclipConn
-        else
-            if _G.NoclipConn then
-                _G.NoclipConn:Disconnect()
-                _G.NoclipConn = nil
-            end
-            for _, part in ipairs(character:GetDescendants()) do
-                if part:IsA("BasePart") then
-                    part.CanCollide = true
-                end
-            end
-        end
-    end
+    Title = "Noclip",
+    Default = false,
+    Callback = function(state)
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        if state then
+            _G.NoclipConn = game:GetService("RunService").Stepped:Connect(function()
+                for _, part in ipairs(character:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        part.CanCollide = false
+                    end
+                end
+            end)
+        else
+            if _G.NoclipConn then
+                _G.NoclipConn:Disconnect()
+                _G.NoclipConn = nil
+            end
+            for _, part in ipairs(character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = true
+                end
+            end
+        end
+    end
 })
 
-Tabs.Teleport:Button({
-    Title = "Teleport To Train",
-    Desc = "You Will On Train",
-    Callback = function() print("Teleporting...") end
-})
+Tabs.Teleport:Button({ Title = "Teleport To Train", Desc = "You Will On Train", Callback = function() print("Teleporting...") end })
 
 Tabs.OP:Button({
     Title = "Get Horse Class",
     Desc = "Get Horse Class",
     Callback = function()
-        local args = {
-    [1] = "Horse"
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("RemotePromise"):WaitForChild("Remotes"):WaitForChild("C_BuyClass"):FireServer(unpack(args))
-task.wait()
-local args = {
-    [1] = "Horse"
-}
-
-game:GetService("ReplicatedStorage").Shared.RemotePromise.Remotes.C_EquipClass:FireServer(unpack(args)) end
+        local args = { "Horse" }
+        local Remote = game:GetService("ReplicatedStorage").Shared.RemotePromise.Remotes
+        Remote.C_BuyClass:FireServer(unpack(args))
+        task.wait()
+        Remote.C_EquipClass:FireServer(unpack(args))
+    end
 })
 
-Tabs.Show:Toggle({
-    Title = "Show Time",
-    Default = false,
-    Callback = function(state) print(tostring(state)) end
-})
+Tabs.Show:Toggle({ Title = "Show Time", Default = false, Callback = function(state) print(tostring(state)) end })
 
-local themeDropdown = Tabs.Setting:Dropdown({
+local themeValues = {}
+for name, _ in pairs(WindUI:GetThemes()) do
+    table.insert(themeValues, name)
+end
+
+local themeDropdown = Tabs.Theme:Dropdown({
     Title = "Select Theme",
     Multi = false,
     AllowNone = false,
@@ -317,8 +214,74 @@ local themeDropdown = Tabs.Setting:Dropdown({
 })
 themeDropdown:Select(WindUI:GetCurrentTheme())
 
+local currentThemeName = WindUI:GetCurrentTheme()
+local themes = WindUI:GetThemes()
+
+local ThemeAccent = themes[currentThemeName].Accent
+local ThemeOutline = themes[currentThemeName].Outline
+local ThemeText = themes[currentThemeName].Text
+local ThemePlaceholderText = themes[currentThemeName].PlaceholderText
+
+function updateTheme()
+    WindUI:AddTheme({
+        Name = currentThemeName,
+        Accent = ThemeAccent,
+        Outline = ThemeOutline,
+        Text = ThemeText,
+        PlaceholderText = ThemePlaceholderText
+    })
+    WindUI:SetTheme(currentThemeName)
+end
+
+local CreateInput = Tabs.Theme:Input({
+    Title = "Theme Name",
+    Value = currentThemeName,
+    Callback = function(name)
+        currentThemeName = name
+    end
+})
+
+Tabs.Theme:Colorpicker({
+    Title = "Background Color",
+    Default = Color3.fromHex(ThemeAccent),
+    Callback = function(color)
+        ThemeAccent = color:ToHex()
+    end
+})
+
+Tabs.Theme:Colorpicker({
+    Title = "Outline Color",
+    Default = Color3.fromHex(ThemeOutline),
+    Callback = function(color)
+        ThemeOutline = color:ToHex()
+    end
+})
+
+Tabs.Theme:Colorpicker({
+    Title = "Text Color",
+    Default = Color3.fromHex(ThemeText),
+    Callback = function(color)
+        ThemeText = color:ToHex()
+    end
+})
+
+Tabs.Theme:Colorpicker({
+    Title = "Placeholder Text Color",
+    Default = Color3.fromHex(ThemePlaceholderText),
+    Callback = function(color)
+        ThemePlaceholderText = color:ToHex()
+    end
+})
+
+Tabs.Theme:Button({
+    Title = "Update Theme",
+    Callback = function()
+        updateTheme()
+    end
+})
+
 local ToggleTransparency = Tabs.Setting:Toggle({
-    Title = "Toggle Window Transparency",
+    Title = "Transparency",
     Callback = function(e)
         Window:ToggleTransparency(e)
     end,
