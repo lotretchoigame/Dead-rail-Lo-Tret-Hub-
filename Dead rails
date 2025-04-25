@@ -282,6 +282,23 @@ Tabs.Teleport:Button({
     Callback = function() print("Teleporting...") end
 })
 
+Tabs.OP:Button({
+    Title = "Get Horse Class",
+    Desc = "Get Horse Class",
+    Callback = function()
+        local args = {
+    [1] = "Horse"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("RemotePromise"):WaitForChild("Remotes"):WaitForChild("C_BuyClass"):FireServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Horse"
+}
+
+game:GetService("ReplicatedStorage").Shared.RemotePromise.Remotes.C_EquipClass:FireServer(unpack(args)) end
+})
+
 Tabs.Show:Toggle({
     Title = "Show Time",
     Default = false,
