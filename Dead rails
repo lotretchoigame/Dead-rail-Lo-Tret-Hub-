@@ -22,7 +22,7 @@ local Confirmed = false
 WindUI:Popup({
     Title = "Welcome :D",
     Icon = "info",
-    Content = "Do you want use this?  " .. gradient("Lo Tret", Color3.fromHex("#00FF87"), Color3.fromHex("#60EFFF")) .. " Lib",
+    Content = "Do you want use this?  " .. gradient("Lo Tret", Color3.fromHex("#00FF87"), Color3.fromHex("#60EFFF")) .. " Script",
     Buttons = {
         {
             Title = "Cancel ;-;",
@@ -73,6 +73,7 @@ local Tabs = {
     Visual = Window:Tab({ Title = "Visual", Icon = "layers-2" }),
     Player = Window:Tab({ Title = "Player", Icon = "dna" }),
     Teleport = Window:Tab({ Title = "Teleport", Icon = "sparkles" }),
+    OP = Window:Tab({ Title = "OverPower", Icon = "sparkles" }),
     Show = Window:Tab({ Title = "Show", Icon = "tv-minimal" }),
     Setting = Window:Tab({ Title = "Setting", Icon = "setting", Desc = "Change Some" }),
     b = Window:Divider(),
@@ -287,9 +288,22 @@ Tabs.Show:Toggle({
     Callback = function(state) print(tostring(state)) end
 })
 
-Tabs.Setting:Dropdown({
-    Title = "Choose a Category",
-    Values = { "Category A", "Category B", "Category C" },
-    Value = "Category A",
-    Callback = function(option) print("Category selected: " .. option) end
+local themeDropdown = Tabs.Setting:Dropdown({
+    Title = "Select Theme",
+    Multi = false,
+    AllowNone = false,
+    Value = nil,
+    Values = themeValues,
+    Callback = function(theme)
+        WindUI:SetTheme(theme)
+    end
+})
+themeDropdown:Select(WindUI:GetCurrentTheme())
+
+local ToggleTransparency = Tabs.Setting:Toggle({
+    Title = "Toggle Window Transparency",
+    Callback = function(e)
+        Window:ToggleTransparency(e)
+    end,
+    Value = WindUI:GetTransparency()
 })
