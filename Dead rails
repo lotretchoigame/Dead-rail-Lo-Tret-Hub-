@@ -100,88 +100,99 @@ Tabs.Auto:Toggle({
     end
 })
 
---// ESP Variables
-local ESPEnabled = false
-local ESPObjects = {}
-local ESPConnection
 local Player = game.Players.LocalPlayer
-local Camera = game.Workspace.CurrentCamera
+local Camera = workspace.CurrentCamera
+local ESPObjects = {}
+local ESPEnabled = false
 
-local function CreateESP(player)
-    -- Create BillboardGui for ESP
-    local Billboard = Instance.new("BillboardGui")
-    Billboard.Adornee = player.Character:WaitForChild("Head")
-    Billboard.Parent = player.Character
-    Billboard.Size = UDim2.new(0, 200, 0, 50)
-    Billboard.AlwaysOnTop = true
-    Billboard.StudsOffset = Vector3.new(0, 2, 0)  -- Adjust this to position the text above the head
-
-    -- Create TextLabel to display player name and distance
-    local Label = Instance.new("TextLabel")
-    Label.Parent = Billboard
-    Label.Size = UDim2.new(1, 0, 1, 0)
-    Label.BackgroundTransparency = 1
-    Label.TextColor3 = Color3.fromRGB(0, 255, 255)  -- Blue color
-    Label.TextStrokeTransparency = 0.5
-    Label.Text = player.Name .. "\nDistance: 0 Studs"  -- Initial distance
-
-    ESPObjects[player] = Label
+local function GetTeamColor(targetPlayer)
+    return Color3.fromRGB(0, 200, 255)
 end
 
-local function RemoveESP(player)
-    if ESPObjects[player] then
-        ESPObjects[player]:Destroy()
-        ESPObjects[player] = nil
+local function CreateESP(targetPlayer)
+    if ESPObjects[targetPlayer] then return end
+    local Billboard = Instance.new("BillboardGui")
+    Billboard.Name = "ESP"
+    Billboard.Adornee = targetPlayer.Character and targetPlayer.Character:FindFirstChild("Head")
+    Billboard.Size = UDim2.new(0, 200, 0, 50)
+    Billboard.StudsOffset = Vector3.new(0, 2, 0)
+    Billboard.AlwaysOnTop = true
+    Billboard.Parent = game.CoreGui
+
+    local TextLabel = Instance.new("TextLabel")
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.Size = UDim2.new(1, 0, 1, 0)
+    TextLabel.TextColor3 = GetTeamColor(targetPlayer)
+    TextLabel.TextStrokeTransparency = 0
+    TextLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+    TextLabel.Font = Enum.Font.SourceSansBold
+    TextLabel.TextScaled = true
+    TextLabel.Parent = Billboard
+
+    ESPObjects[targetPlayer] = { Billboard = Billboard, Label = TextLabel }
+end
+
+local function RemoveESP(targetPlayer)
+    if ESPObjects[targetPlayer] then
+        ESPObjects[targetPlayer].Billboard:Destroy()
+        ESPObjects[targetPlayer] = nil
+    end
+end
+
+local function ClearAllESP()
+    for player, _ in pairs(ESPObjects) do
+        RemoveESP(player)
     end
 end
 
 local function UpdateESP()
     while ESPEnabled do
-        for player, label in pairs(ESPObjects) do
-            if player.Character and player.Character:FindFirstChild("Head") then
-                -- Calculate distance to player
-                local distance = (Camera.CFrame.Position - player.Character.Head.Position).magnitude
-                label.Text = player.Name .. "\nDistance: " .. math.floor(distance) .. " Studs"  -- Update distance
-            end
-        end
-        wait(0.5)  -- Update every 0.5 seconds
-    end
-end
-
-local function ToggleESP(state)
-    ESPEnabled = state
-    if ESPEnabled then
-        -- Enable ESP for players
         for _, player in ipairs(game.Players:GetPlayers()) do
-            if player.Character and player.Character:FindFirstChild("Head") then
-                CreateESP(player)
+            if player ~= Player then
+                if player.Character and player.Character:FindFirstChild("Head") and player.Character:FindFirstChildOfClass("Humanoid") then
+                    if not ESPObjects[player] then
+                        CreateESP(player)
+                    end
+
+                    local esp = ESPObjects[player]
+                    if esp and esp.Label then
+                        local distance = (Camera.CFrame.Position - player.Character.Head.Position).Magnitude
+                        local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
+                        local health = math.floor(humanoid.Health)
+
+                        if health <= 0 then
+                            esp.Label.Text = player.Name .. "\nDistance: " .. math.floor(distance) .. " Studs\n[Dead]"
+                        else
+                            esp.Label.Text = player.Name .. "\nDistance: " .. math.floor(distance) .. " Studs\nHealth: " .. health
+                        end
+
+                        esp.Label.TextColor3 = GetTeamColor(player)
+                        esp.Billboard.Adornee = player.Character:FindFirstChild("Head")
+                    end
+                end
             end
         end
-        ESPConnection = game.Players.PlayerAdded:Connect(function(player)
-            if player.Character and player.Character:FindFirstChild("Head") then
-                CreateESP(player)
+
+        for trackedPlayer, _ in pairs(ESPObjects) do
+            if not game.Players:FindFirstChild(trackedPlayer.Name) then
+                RemoveESP(trackedPlayer)
             end
-        end)
-        -- Start updating ESP every 0.5 seconds
-        UpdateESP()
-    else
-        -- Disable ESP
-        if ESPConnection then
-            ESPConnection:Disconnect()
-            ESPConnection = nil
         end
-        for player, _ in pairs(ESPObjects) do
-            RemoveESP(player)
-        end
+
+        task.wait(0.5)
     end
 end
 
---// ESP Toggle trong Tab2
 Tabs.Esp:Toggle({
     Title = "Player Esp",
     Default = false,
     Callback = function(state)
-        ToggleESP(state)
+        ESPEnabled = state
+        if state then
+            UpdateESP()
+        else
+            ClearAllESP()
+        end
     end
 })
 
