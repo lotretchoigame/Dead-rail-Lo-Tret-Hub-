@@ -275,6 +275,22 @@ Tabs.Player:Toggle({
     end
 })
 
+local CameraConnection
+
+Tabs.Player:Toggle({
+    Title = "Free Camera",
+    Default = false,
+    Callback = function(state)
+        if state then
+            game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.Default
+            Player.CameraMode = Enum.CameraMode.Classic
+        else
+            Player.CameraMode = Enum.CameraMode.LockFirstPerson
+            Camera.CFrame = CFrame.new(Camera.CFrame.Position, Camera.CFrame.Position + Camera.CFrame.LookVector)
+        end
+    end
+})
+
 Tabs.Teleport:Button({ Title = "Teleport To Train", Desc = "You Will On Train", Callback = function() print("Teleporting...") end })
 
 Tabs.OP:Button({
