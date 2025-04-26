@@ -104,54 +104,74 @@ Tabs.Auto:Toggle({
 local ESPEnabled = false
 local ESPObjects = {}
 local ESPConnection
+local Player = game.Players.LocalPlayer
+local Camera = game.Workspace.CurrentCamera
 
-local function CreateESP(object)
+local function CreateESP(player)
+    -- Create BillboardGui for ESP
     local Billboard = Instance.new("BillboardGui")
-    Billboard.Adornee = object
-    Billboard.Parent = object
-    Billboard.Size = UDim2.new(0, 100, 0, 40)
+    Billboard.Adornee = player.Character:WaitForChild("Head")
+    Billboard.Parent = player.Character
+    Billboard.Size = UDim2.new(0, 200, 0, 50)
     Billboard.AlwaysOnTop = true
+    Billboard.StudsOffset = Vector3.new(0, 2, 0)  -- Adjust this to position the text above the head
 
+    -- Create TextLabel to display player name and distance
     local Label = Instance.new("TextLabel")
     Label.Parent = Billboard
     Label.Size = UDim2.new(1, 0, 1, 0)
     Label.BackgroundTransparency = 1
-    Label.Text = object.Name
-    Label.TextColor3 = Color3.fromRGB(255, 255, 0)
+    Label.TextColor3 = Color3.fromRGB(0, 255, 255)  -- Blue color
     Label.TextStrokeTransparency = 0.5
+    Label.Text = player.Name .. "\nDistance: 0 Studs"  -- Initial distance
 
-    ESPObjects[object] = Billboard
+    ESPObjects[player] = Label
 end
 
-local function RemoveESP(object)
-    if ESPObjects[object] then
-        ESPObjects[object]:Destroy()
-        ESPObjects[object] = nil
+local function RemoveESP(player)
+    if ESPObjects[player] then
+        ESPObjects[player]:Destroy()
+        ESPObjects[player] = nil
+    end
+end
+
+local function UpdateESP()
+    while ESPEnabled do
+        for player, label in pairs(ESPObjects) do
+            if player.Character and player.Character:FindFirstChild("Head") then
+                -- Calculate distance to player
+                local distance = (Camera.CFrame.Position - player.Character.Head.Position).magnitude
+                label.Text = player.Name .. "\nDistance: " .. math.floor(distance) .. " Studs"  -- Update distance
+            end
+        end
+        wait(0.5)  -- Update every 0.5 seconds
     end
 end
 
 local function ToggleESP(state)
     ESPEnabled = state
     if ESPEnabled then
-        -- Enable ESP
-        for _, object in ipairs(workspace:GetDescendants()) do
-            if object:IsA("Model") and not object:FindFirstChild("Humanoid") then
-                CreateESP(object)
+        -- Enable ESP for players
+        for _, player in ipairs(game.Players:GetPlayers()) do
+            if player.Character and player.Character:FindFirstChild("Head") then
+                CreateESP(player)
             end
         end
-        ESPConnection = workspace.DescendantAdded:Connect(function(object)
-            if object:IsA("Model") and not object:FindFirstChild("Humanoid") then
-                CreateESP(object)
+        ESPConnection = game.Players.PlayerAdded:Connect(function(player)
+            if player.Character and player.Character:FindFirstChild("Head") then
+                CreateESP(player)
             end
         end)
+        -- Start updating ESP every 0.5 seconds
+        UpdateESP()
     else
         -- Disable ESP
         if ESPConnection then
             ESPConnection:Disconnect()
             ESPConnection = nil
         end
-        for object, _ in pairs(ESPObjects) do
-            RemoveESP(object)
+        for player, _ in pairs(ESPObjects) do
+            RemoveESP(player)
         end
     end
 end
