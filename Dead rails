@@ -71,6 +71,7 @@ Tabs.Misc:Button({ Title = "Click Me", Desc = "This is a simple button", Callbac
 
 Tabs.Auto:Toggle({
     Title = "Auto Grab MoneyBag",
+    Icon = "circle-dollar-sign", 
     Default = false,
     Callback = function(state)
         if state then
