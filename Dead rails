@@ -59,7 +59,7 @@ local Tabs = {
     Show = Window:Tab({ Title = "Show", Icon = "tv-minimal" }),
     OP = Window:Tab({ Title = "OP", Icon = "sparkles" }),
     Theme = Window:Tab({ Title = "Theme", Icon = "bolt", Desc = "Set Theme" }),
-    Setting = Window:Tab({ Title = "Setting", Icon = "setting", Desc = "Change Some" }),
+    Setting = Window:Tab({ Title = "Setting", Icon = "settings", Desc = "Change Some" }),
     b = Window:Divider(),
     WindowTab = Window:Tab({ Title = "Made By @Lo_Tret_Meme ", Icon = "settings", Desc = "Only Youtube" }),
     be = Window:Divider(),
