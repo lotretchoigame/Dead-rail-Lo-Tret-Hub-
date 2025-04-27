@@ -40,7 +40,7 @@ local Window = WindUI:CreateWindow({
 })
 
 Window:EditOpenButton({
-    Title = "Lo Tret-Dead Rails",
+    Title = "Lo Tret-Dead Rails(Lobby)",
     Icon = "monitor",
     CornerRadius = UDim.new(0,16),
     StrokeThickness = 2,
@@ -49,7 +49,7 @@ Window:EditOpenButton({
 })
 
 local Tabs = {
-    Lobby = Window:Tab({ Title = "OP", Icon = "sparkles" }),
+    Lobby = Window:Tab({ Title = "Lobby", Icon = "sparkles" }),
     b = Window:Divider(),
     WindowTab = Window:Tab({ Title = "Made By @Lo_Tret_Meme ", Icon = "settings", Desc = "Only Youtube" }),
     be = Window:Divider(),
