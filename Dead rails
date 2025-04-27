@@ -18,9 +18,9 @@ local Confirmed = false
 WindUI:Popup({
     Title = "Welcome :D",
     Icon = "info",
-    Content = "Do you want use this?  " .. gradient("Lo Tret", Color3.fromHex("#00FF87"), Color3.fromHex("#60EFFF")) .. " Script",
+    Content = "Do you want use this?  " .. gradient("Lo Tret", Color3.fromHex("#00FF87"), Color3.fromHex("#60EFFF")) .. " Script", Color3.fromHex("
     Buttons = {
-        { Title = "Cancel ;-;", Callback = function() end, Variant = "Tertiary" },
+        { Title = "Cancel ;-;", Icon = "close", Callback = function() end, Variant = "Tertiary" },
         { Title = "Continue :D", Icon = "arrow-right", Callback = function() Confirmed = true end, Variant = "Primary" }
     }
 })
@@ -57,7 +57,6 @@ local Tabs = {
     Player = Window:Tab({ Title = "Player", Icon = "dna" }),
     Teleport = Window:Tab({ Title = "Teleport", Icon = "sparkles" }),
     Show = Window:Tab({ Title = "Show", Icon = "tv-minimal" }),
-    OP = Window:Tab({ Title = "OP", Icon = "sparkles" }),
     Theme = Window:Tab({ Title = "Theme", Icon = "bolt", Desc = "Set Theme" }),
     Setting = Window:Tab({ Title = "Setting", Icon = "settings", Desc = "Change Some" }),
     b = Window:Divider(),
@@ -294,18 +293,6 @@ Tabs.Player:Toggle({
 })
 
 Tabs.Teleport:Button({ Title = "Teleport To Train", Desc = "You Will On Train", Callback = function() print("Teleporting...") end })
-
-Tabs.OP:Button({
-    Title = "Get Horse Class",
-    Desc = "Get Horse Class",
-    Callback = function()
-        local args = { "Horse" }
-        local Remote = game:GetService("ReplicatedStorage").Shared.RemotePromise.Remotes
-        Remote.C_BuyClass:FireServer(unpack(args))
-        task.wait()
-        Remote.C_EquipClass:FireServer(unpack(args))
-    end
-})
 
 Tabs.Show:Toggle({ Title = "Show Time", Default = false, Callback = function(state) print(tostring(state)) end })
 
