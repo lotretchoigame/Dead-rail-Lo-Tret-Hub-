@@ -18,7 +18,7 @@ local Confirmed = false
 WindUI:Popup({
     Title = "Welcome :D",
     Icon = "info",
-    Content = "Do you want use this?  " .. gradient("Lo Tret", Color3.fromHex("#00FF87"), Color3.fromHex("#60EFFF")) .. " Script" .. gradient("(Lobby)", Color3.fromHex("#ffb566"), Color3.fromHex("#ffb566"))  
+    Content = "Do you want use this?  " .. gradient("Lo Tret", Color3.fromHex("#00FF87"), Color3.fromHex("#60EFFF")) .. " Script" .. gradient("(Lobby)", Color3.fromHex("#ffb566"), Color3.fromHex("#ffb566")),  
     Buttons = {
         { Title = "Cancel ;-;", Icon = "close", Callback = function() end, Variant = "Tertiary" },
         { Title = "Continue :D", Icon = "arrow-right", Callback = function() Confirmed = true end, Variant = "Primary" }
