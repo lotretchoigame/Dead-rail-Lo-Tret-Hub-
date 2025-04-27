@@ -1,1 +1,69 @@
+local WindUI = loadstring(game:HttpGet("https://tree-hub.vercel.app/api/UI/WindUI"))()
 
+function gradient(text, startColor, endColor)
+    local result = ""
+    local length = #text
+    for i = 1, length do
+        local t = (i - 1) / math.max(length - 1, 1)
+        local r = math.floor((startColor.R + (endColor.R - startColor.R) * t) * 255)
+        local g = math.floor((startColor.G + (endColor.G - startColor.G) * t) * 255)
+        local b = math.floor((startColor.B + (endColor.B - startColor.B) * t) * 255)
+        local char = text:sub(i, i)
+        result = result .. "<font color=\"rgb(" .. r ..", " .. g .. ", " .. b .. ")\">" .. char .. "</font>"
+    end
+    return result
+end
+
+local Confirmed = false
+WindUI:Popup({
+    Title = "Welcome :D",
+    Icon = "info",
+    Content = "Do you want use this?  " .. gradient("Lo Tret(Lobby)", Color3.fromHex("#00FF87"), Color3.fromHex("#60EFFF")) .. " Script",
+    Buttons = {
+        { Title = "Cancel ;-;", Callback = function() end, Variant = "Tertiary" },
+        { Title = "Continue :D", Icon = "arrow-right", Callback = function() Confirmed = true end, Variant = "Primary" }
+    }
+})
+repeat task.wait() until Confirmed
+
+local Window = WindUI:CreateWindow({
+    Title = "Lo Tret-Dead Rails",
+    Icon = "house",
+    Author = "Dead Rails",
+    Folder = "CloudHub",
+    Size = UDim2.fromOffset(320, 200),
+    Transparent = true,
+    Theme = "Dark",
+    UserEnabled = false,
+    SideBarWidth = 200,
+    HasOutline = true,
+})
+
+Window:EditOpenButton({
+    Title = "Lo Tret-Dead Rails",
+    Icon = "monitor",
+    CornerRadius = UDim.new(0,16),
+    StrokeThickness = 2,
+    Color = ColorSequence.new(Color3.fromHex("FF0F7B"), Color3.fromHex("F89B29")),
+    Draggable = true,
+})
+
+local Tabs = {
+    Lobby = Window:Tab({ Title = "OP", Icon = "sparkles" }),
+    b = Window:Divider(),
+    WindowTab = Window:Tab({ Title = "Made By @Lo_Tret_Meme ", Icon = "settings", Desc = "Only Youtube" }),
+    be = Window:Divider(),
+}
+
+Window:SelectTab(1)
+Tabs.Lobby:Button({
+    Title = "Get Horse Class",
+    Desc = "Get Horse Class",
+    Callback = function()
+        local args = { "Horse" }
+        local Remote = game:GetService("ReplicatedStorage").Shared.RemotePromise.Remotes
+        Remote.C_BuyClass:FireServer(unpack(args))
+        task.wait()
+        Remote.C_EquipClass:FireServer(unpack(args))
+    end
+})
