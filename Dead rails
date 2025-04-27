@@ -40,7 +40,7 @@ local Window = WindUI:CreateWindow({
 })
 
 Window:EditOpenButton({
-    Title = "Lo Tret-Dead Rails",
+    Title = "Lo Tret-Dead Rails(Main Game)",
     Icon = "monitor",
     CornerRadius = UDim.new(0,16),
     StrokeThickness = 2,
