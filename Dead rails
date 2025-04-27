@@ -283,10 +283,11 @@ Tabs.Player:Toggle({
     Default = false,
     Callback = function(state)
         if state then
-            game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.Default
             Player.CameraMode = Enum.CameraMode.Classic
+            Camera.CameraType = Enum.CameraType.Custom -- Cho phép zoom + tự do
         else
             Player.CameraMode = Enum.CameraMode.LockFirstPerson
+            Camera.CameraType = Enum.CameraType.Custom -- Giữ Custom để không lỗi, nhưng vẫn khóa góc nhìn
             Camera.CFrame = CFrame.new(Camera.CFrame.Position, Camera.CFrame.Position + Camera.CFrame.LookVector)
         end
     end
